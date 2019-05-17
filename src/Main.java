@@ -10,16 +10,20 @@ public class Main {
         (new Main()).getInputs();
     }
 
-    private void getInputs(){
+    private void getInputs() {
         System.out.println("Please enter your directory: ");
         Scanner scanner = new Scanner(System.in);
-        this.directory = scanner.nextLine();
-        File root = new File(directory);
-        if (root.isFile())
-            System.out.println("is file");
-        else if (root.isDirectory())
-            System.out.println("is dir");
-        else
-            System.out.println("nothing");
+        File root;
+        do {
+            this.directory = scanner.nextLine();
+            root = new File(directory);
+            if (root.isFile())
+                System.out.println("\033[0;33m" + "is file" + "\033[0m");
+            else if (root.isDirectory())
+                System.out.println("is dir");
+            else
+                System.out.println("\033[0;31m" + "nothing" + "\033[0m");
+        } while (!root.isDirectory());
+
     }
 }
