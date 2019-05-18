@@ -43,10 +43,17 @@ public class Main {
 //                        System.out.println(files.get(file.length()+""));
 //                        System.out.println(file.getAbsolutePath());
 //                    }
-                    files.put(file.length() + "", file.getAbsolutePath());
+                    if (file.getName().contains("."))
+                        files.put(file.length() + "--" + file.getName().substring(file.getName().lastIndexOf('.')), file.getAbsolutePath());
+                    else
+                        files.put(file.length() + "--", file.getAbsolutePath());
                 }
 
             }
+        }
+        for (String key :
+                files.keySet()) {
+            System.out.println(key + ":" + files.get(key));
         }
         System.out.println(files.size());
     }
