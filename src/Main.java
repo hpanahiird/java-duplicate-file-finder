@@ -58,17 +58,21 @@ public class Main {
 
             }
         }
-        int i=0;
+        int i = 0;
+        int totalCount = 0;
         for (String key :
                 files.keySet()) {
-            if (files.get(key).size()>1){
+            if (files.get(key).size() > 1) {
                 for (String s :
                         files.get(key)) {
-                    System.out.print(s+"\t");
+                    System.out.println("\t" + s);
                 }
-                System.out.println();
+                System.out.println("---------------------");
             }
+            totalCount += files.get(key).size();
         }
         System.out.println(files.size());
+        System.out.println(totalCount);
+
     }
 }
