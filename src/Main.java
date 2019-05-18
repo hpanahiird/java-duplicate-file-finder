@@ -1,14 +1,11 @@
 import java.io.File;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
     private String directory;
     private Queue<File> directories = new LinkedList<>();
-    private HashMap<String, String> files = new HashMap<>();
+    private HashMap<String, ArrayList<String>> files = new HashMap<>();
 
     public static void main(String[] args) {
         System.out.println("Hello");
@@ -34,7 +31,7 @@ public class Main {
             File currentFile = directories.poll();
             for (String child :
                     currentFile.list()) {
-                System.out.println(child);
+//                System.out.println(child);
                 File file = new File(currentFile, child);
                 if (file.isDirectory())
                     directories.add(file);
@@ -43,17 +40,34 @@ public class Main {
 //                        System.out.println(files.get(file.length()+""));
 //                        System.out.println(file.getAbsolutePath());
 //                    }
+                    String key;
                     if (file.getName().contains("."))
-                        files.put(file.length() + "--" + file.getName().substring(file.getName().lastIndexOf('.')), file.getAbsolutePath());
+                        key = file.length() + "--" + file.getName().substring(file.getName().lastIndexOf('.'));
+//                        files.put(file.length() + "--" + file.getName().substring(file.getName().lastIndexOf('.')), file.getAbsolutePath());
                     else
-                        files.put(file.length() + "--", file.getAbsolutePath());
+                        key = file.length() + "--";
+//                        files.put(file.length() + "--", file.getAbsolutePath());
+
+                    if (files.containsKey(key)) {
+                        files.get(key).add(file.getAbsolutePath());
+                    } else {
+                        files.put(key, new ArrayList<>());
+                        files.get(key).add(file.getAbsolutePath());
+                    }
                 }
 
             }
         }
+        int i=0;
         for (String key :
                 files.keySet()) {
-            System.out.println(key + ":" + files.get(key));
+            if (files.get(key).size()>1){
+                for (String s :
+                        files.get(key)) {
+                    System.out.print(s+"\t");
+                }
+                System.out.println();
+            }
         }
         System.out.println(files.size());
     }
